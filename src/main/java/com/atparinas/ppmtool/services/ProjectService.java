@@ -23,8 +23,18 @@ public class ProjectService {
             throw new ProjectIdException("Project Identifier must be unique");
         }
 
-
-
     }
+
+    public Project findProjectByIndentifier(String projectId){
+
+        Project project =  projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+
+        if(project == null){
+            throw new ProjectIdException("Project Id does not exist");
+        }
+
+        return project;
+    }
+
 
 }
