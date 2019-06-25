@@ -1,5 +1,6 @@
 package com.atparinas.ppmtool.services;
 
+import com.atparinas.ppmtool.domain.Backlog;
 import com.atparinas.ppmtool.domain.Project;
 import com.atparinas.ppmtool.exceptions.ProjectIdException;
 import com.atparinas.ppmtool.repositories.ProjectRepository;
@@ -16,6 +17,14 @@ public class ProjectService {
 
         try{
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+            if(project.getId() == null){
+                Backlog backlog = new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            }
+
             return projectRepository.save(project);
 
         }catch (Exception e){
