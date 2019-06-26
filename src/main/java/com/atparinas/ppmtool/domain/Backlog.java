@@ -1,6 +1,8 @@
 package com.atparinas.ppmtool.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,14 +20,14 @@ public class Backlog {
     private String projectIdentifier;
 
     //OneToOne with Project
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     @JsonIgnore
     private Project project;
 
     //OneToMay with projectTasks
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
-    private List<ProjectTask> projectTasks = new ArrayList<>();
+    private List<ProjectTask> projectTasks;
 
 
     public Long getId() {
